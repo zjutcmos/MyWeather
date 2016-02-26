@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /*
  * 将常用的数据库操作封装起来，以便后期使用
@@ -72,18 +73,18 @@ public class MyWeatherDB {
 		if (cursor.moveToFirst()) {
 			do {
 				Province province = new Province();
-				province.setId(cursor.getInt(cursor
-						.getColumnIndexOrThrow("province_id")));
+				province.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				province.setProvinceCode(cursor.getString(cursor
-						.getColumnIndexOrThrow("province_code")));
+						.getColumnIndex("province_code")));
 				province.setProvinceName(cursor.getString(cursor
-						.getColumnIndexOrThrow("province_name")));
+						.getColumnIndex("province_name")));
 				list.add(province);
 			} while (cursor.moveToNext());
-			if (cursor != null) {
-				cursor.close();
-			}
 		}
+		if (cursor != null) {
+			cursor.close();
+		}
+
 		return list;
 	}
 
@@ -149,15 +150,16 @@ public class MyWeatherDB {
 		if (cursor.moveToFirst()) {
 			do {
 				Country country = new Country();
-				country.setCityId(cityId);
-				country.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
-				country.setCountryCode(cursor.getString(cursor
-						.getColumnIndexOrThrow("country_code")));
+				country.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				country.setCountryName(cursor.getString(cursor
-						.getColumnIndexOrThrow("country_name")));
+						.getColumnIndex("country_name")));
+				country.setCountryCode(cursor.getString(cursor
+						.getColumnIndex("country_code")));
+				country.setCityId(cityId);
 				list.add(country);
 			} while (cursor.moveToNext());
 		}
+	
 		if (cursor != null) {
 			cursor.close();
 		}

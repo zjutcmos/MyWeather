@@ -9,7 +9,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
 	/*
 	 * Province表建表语句
 	 */
-	public static final String CREATE_PROVINCE = "create table Provice(id integer primary key autoincrement,"
+	public static final String CREATE_PROVINCE = "create table Province(id integer primary key autoincrement,"
 			+ "province_name text,province_code text)";
 	/*
 	 * City表建表语句
@@ -19,8 +19,8 @@ public class MyDbHelper extends SQLiteOpenHelper {
 	/*
 	 * Country表建表语句
 	 */
-	public static final String CREATE_COUNTRY = "create table Country(id integer primary key autoincrement,country_name,"
-			+ "country_code,city_id,integer)";
+	public static final String CREATE_COUNTRY = "create table Country(id integer primary key autoincrement,country_name text,"
+			+ "country_code text,city_id integer)";
 
 	public MyDbHelper(Context context, String name, CursorFactory factory,
 			int version) {

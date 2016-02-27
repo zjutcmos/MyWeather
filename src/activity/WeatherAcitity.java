@@ -1,5 +1,6 @@
 package activity;
 
+import service.AutoUpdateService;
 import util.HttpCallbackListener;
 import util.HttpUtil;
 import util.Utility;
@@ -60,6 +61,9 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 			// 没有县级代号时就直接显示本地天气
 			showWeather();
 		}
+		//激活 AutoUpdateService 服务，实现后台定时更新的功能
+		Intent intent = new Intent(this, AutoUpdateService.class);
+		startService(intent);
 	}
 
 	/*
@@ -83,7 +87,7 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	 * 
 	 * @param weatherCode
 	 */
-	private void queryWeatherInfo(String weatherCode) {
+	public void queryWeatherInfo(String weatherCode) {
 		String address = "http://wthrcdn.etouch.cn/weather_mini?citykey="
 				+ weatherCode;
 		Log.d("weatherCode--->", weatherCode);

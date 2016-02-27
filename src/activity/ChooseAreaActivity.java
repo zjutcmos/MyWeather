@@ -71,15 +71,19 @@ public class ChooseAreaActivity extends Activity {
 	 * 当前选中的级别
 	 */
 	private int currentLevel;
+	private boolean isFromWeatherActivity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//如果先前已经选择过了城市，则直接跳转到WeatherAcitivity,如果没有选择，则选择好县级后跳转顺便将coutryCode传过去
-		SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
-		if (sharedPreferences.getBoolean("city_selected", false)) {
-			Intent intent=new Intent(this,WeatherAcitity.class);
+		isFromWeatherActivity = getIntent().getBooleanExtra(
+				"from_weatherActivity", false);
+		// 如果先前已经选择过了城市且不是从WeatherActivity跳转过来，则直接跳转到WeatherAcitivity,如果没有选择，则选择好县级后跳转顺便将coutryCode传过去
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		if (sharedPreferences.getBoolean("city_selected", false)
+				&&!isFromWeatherActivity) {
+			Intent intent = new Intent(this, WeatherAcitity.class);
 			startActivity(intent);
 			finish();
 			return;
@@ -104,10 +108,12 @@ public class ChooseAreaActivity extends Activity {
 				} else if (currentLevel == LEVEL_CITY) {
 					selectedCity = cityList.get(position);
 					queryCountries();
-				}else if (currentLevel==LEVEL_COUNTRY) {
-					String countryCode=countryList.get(position).getCountryCode();
+				} else if (currentLevel == LEVEL_COUNTRY) {
+					String countryCode = countryList.get(position)
+							.getCountryCode();
 					Log.d("选择的区域是:-->", countryCode);
-					Intent intent=new Intent(ChooseAreaActivity.this,WeatherAcitity.class);
+					Intent intent = new Intent(ChooseAreaActivity.this,
+							WeatherAcitity.class);
 					intent.putExtra("country_code", countryCode);
 					startActivity(intent);
 					finish();
@@ -161,7 +167,7 @@ public class ChooseAreaActivity extends Activity {
 	 */
 	private void queryCountries() {
 		countryList = myWeatherDB.loadCountry(selectedCity.getId());
-		Log.d("countryList", countryList.size()+"=2===");
+		Log.d("countryList", countryList.size() + "=2===");
 		if (countryList.size() > 0) {
 			Log.d("activity", "-1-");
 			dataList.clear();
@@ -278,6 +284,10 @@ public class ChooseAreaActivity extends Activity {
 		} else if (currentLevel == LEVEL_CITY) {
 			queryProvinces();
 		} else {
+			if (isFromWeatherActivity) {
+				Intent intent = new Intent(this, WeatherAcitity.class);
+				startActivity(intent);
+			}
 			finish();
 		}
 	}

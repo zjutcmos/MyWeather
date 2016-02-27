@@ -91,21 +91,24 @@ public class Utility {
 	 * 解析服务器返回的json数据，并将其解析出的数据存储到本地
 	 */
 	public static void handleWeatherResponse(Context context, String response) {
-		Log.d("要解析的json数据是-->",response);
+		Log.d("要解析的json数据是-->", response);
 		try {
 			JSONObject jo = new JSONObject(response);
 			JSONObject jsonObject2 = jo.getJSONObject("data");
 			JSONArray weatherInfo = jsonObject2.getJSONArray("forecast");
 			String city_name = jsonObject2.getString("city");
-			//String weather_code = weatherInfo.getJSONObject(0).getString("cityid");====
-			String weather_code ="101050304";
+			// String weather_code =
+			// weatherInfo.getJSONObject(0).getString("cityid");====
+			// String weather_code ="101050304";
 			String temp_high = weatherInfo.getJSONObject(0).getString("high");// 最高温度
 			String temp_low = weatherInfo.getJSONObject(0).getString("low");// 最低温度
-			String weather_description = weatherInfo.getJSONObject(0).getString("type");// 天气描述
-			//String publish_Time = weatherInfo.getJSONObject(0).getString("ptime");// 发布时间
+			String weather_description = weatherInfo.getJSONObject(0)
+					.getString("type");// 天气描述
+			// String publish_Time =
+			// weatherInfo.getJSONObject(0).getString("ptime");// 发布时间
 			String publish_Time = "9：00AM";
-			saveWeatherInfo(context, city_name, weather_code,
-					weather_description, temp_high, temp_low, publish_Time);
+			saveWeatherInfo(context, city_name, weather_description, temp_high,
+					temp_low, publish_Time);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -116,28 +119,27 @@ public class Utility {
 	 * 
 	 * @param context
 	 * @param city_name
-	 * @param weather_code
 	 * @param weather_description
 	 * @param temp_high
 	 * @param temp_low
 	 * @param publish_Time
 	 */
 	private static void saveWeatherInfo(Context context, String city_name,
-			String weather_code, String weather_description, String temp_high,
-			String temp_low, String publish_Time) {
+			String weather_description, String temp_high, String temp_low,
+			String publish_Time) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
 		SharedPreferences.Editor editor = PreferenceManager
 				.getDefaultSharedPreferences(context).edit();
-            editor.putBoolean("city_selected", true);
-            editor.putString("city_name", city_name);
-            editor.putString("weather_code", weather_code);
-            editor.putString("weather_description", weather_description);
-            editor.putString("temp_high", temp_high);
-            editor.putString("temp_low", temp_low);
-            editor.putString("publish_Time", publish_Time);
-            editor.putString("current_data", sdf.format(new Date()));
-            editor.commit();
-            
+		editor.putBoolean("city_selected", true);
+		editor.putString("city_name", city_name);
+
+		editor.putString("weather_description", weather_description);
+		editor.putString("temp_high", temp_high);
+		editor.putString("temp_low", temp_low);
+		editor.putString("publish_Time", publish_Time);
+		editor.putString("current_data", sdf.format(new Date()));
+		editor.commit();
+
 	}
 
 }

@@ -34,6 +34,7 @@ public class HttpUtil {
 					if (httpCallbackListener != null) {
 						// 回调onFinish()方法
 						httpCallbackListener.onFinish(response.toString());
+						Log.d("返回的数据是：-->", response.toString());
 					}
 				} catch (Exception e) {
 					

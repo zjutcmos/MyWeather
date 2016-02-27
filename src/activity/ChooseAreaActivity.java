@@ -15,7 +15,11 @@ import com.example.myweather.R;
 import db.MyWeatherDB;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +75,15 @@ public class ChooseAreaActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//如果先前已经选择过了城市，则直接跳转到WeatherAcitivity,如果没有选择，则选择好县级后跳转顺便将coutryCode传过去
+		SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+		if (sharedPreferences.getBoolean("city_selected", false)) {
+			Intent intent=new Intent(this,WeatherAcitity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.choose_area);
 		listView = (ListView) findViewById(R.id.list_view);
@@ -91,6 +104,13 @@ public class ChooseAreaActivity extends Activity {
 				} else if (currentLevel == LEVEL_CITY) {
 					selectedCity = cityList.get(position);
 					queryCountries();
+				}else if (currentLevel==LEVEL_COUNTRY) {
+					String countryCode=countryList.get(position).getCountryCode();
+					Log.d("选择的区域是:-->", countryCode);
+					Intent intent=new Intent(ChooseAreaActivity.this,WeatherAcitity.class);
+					intent.putExtra("country_code", countryCode);
+					startActivity(intent);
+					finish();
 				}
 			}
 		});

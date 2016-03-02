@@ -18,12 +18,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -42,19 +44,20 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	private TextView current_temp;// 用于显示当前温度
 	private TextView fengxiang;// 用于显示当前风向
 	private TextView fengli;// 用于显示当前风力
-	private TextView weather_desp1,high_temp1,low_temp1,date1;//明天的天气
-	private TextView weather_desp2,high_temp2,low_temp2,date2;//后天的天气
-	private TextView weather_desp3,high_temp3,low_temp3,date3;//外后的天气
+	private TextView weather_desp1, high_temp1, low_temp1, date1;// 明天的天气
+	private TextView weather_desp2, high_temp2, low_temp2, date2;// 后天的天气
+	private TextView weather_desp3, high_temp3, low_temp3, date3;// 外后的天气
 	private Button switchCity;// 切换城市
 	private Button refreshWeather;// 刷新天气
+	private RelativeLayout layout_bg;// 整个天气背景布局
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather_layout);
-		initView();//初始化控件
-		
+		initView();// 初始化控件
+
 		// closeStrictMode();
 		String countryCode = getIntent().getStringExtra("country_code");// 手动选择城市时获得传过来的country_code
 		if (!TextUtils.isEmpty(countryCode)) {
@@ -67,13 +70,14 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 			// 没有县级代号时就直接显示本地天气
 			showWeather();
 		}
-		//激活 AutoUpdateService 服务，实现后台定时更新的功能
+		// 激活 AutoUpdateService 服务，实现后台定时更新的功能
 		Intent intent = new Intent(this, AutoUpdateService.class);
 		startService(intent);
 	}
 
 	private void initView() {
 		weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
+		layout_bg = (RelativeLayout) findViewById(R.id.weather_bg);
 		cityNameText = (TextView) findViewById(R.id.city_name);
 		publishText = (TextView) findViewById(R.id.publish_text);
 		weatherDespText = (TextView) findViewById(R.id.weather_desp);
@@ -99,7 +103,7 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		refreshWeather = (Button) findViewById(R.id.refresh_weather);
 		switchCity.setOnClickListener(this);
 		refreshWeather.setOnClickListener(this);
-		
+
 	}
 
 	/*
@@ -191,20 +195,22 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	private void showWeather() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
+		String weather_description = sharedPreferences.getString(
+				"weather_description", "");
+		changeBackground(weather_description);
 		cityNameText.setText(sharedPreferences.getString("city_name", ""));
 		current_temp.setText(sharedPreferences.getString("current_temp", ""));
 		tempHighText.setText(sharedPreferences.getString("temp_high", ""));
 		tempLowText.setText(sharedPreferences.getString("temp_low", ""));
 		fengli.setText(sharedPreferences.getString("fengli", ""));
 		fengxiang.setText(sharedPreferences.getString("fengxiang", ""));
-		weatherDespText.setText(sharedPreferences.getString(
-				"weather_description", ""));
+		weatherDespText.setText(weather_description);
 		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.CHINA);
 		String publish_Time = sdf2.format(new Date());
 		publishText.setText("今天 " + publish_Time + "发布");
 		currentDateText
 				.setText(sharedPreferences.getString("current_data", ""));
-		//后3天的天气
+		// 后3天的天气
 		weather_desp1.setText(sharedPreferences.getString("weather_desp1", ""));
 		high_temp1.setText(sharedPreferences.getString("high_temp1", ""));
 		low_temp1.setText(sharedPreferences.getString("low_temp1", ""));
@@ -220,6 +226,36 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
 
+	}
+
+	/**
+	 * 根据天气信息变换背景图片
+	 * 
+	 * @param weather_description
+	 */
+	private void changeBackground(String weather_description) {
+		if (!TextUtils.isEmpty(weather_description)) {
+             switch (weather_description) {
+			case "晴":
+				layout_bg.setBackground(getResources().getDrawable(R.drawable.qing));
+				break;
+			case "阴":
+				layout_bg.setBackground(getResources().getDrawable(R.drawable.yin));
+				break;
+			case "小雨":
+				layout_bg.setBackground(getResources().getDrawable(R.drawable.yu));
+				break;
+			case "小雪":
+				layout_bg.setBackground(getResources().getDrawable(R.drawable.xue));
+				break;
+			case "多云":
+				layout_bg.setBackground(getResources().getDrawable(R.drawable.duoyun));
+				break;
+			default:
+				layout_bg.setBackgroundColor(0x27A5F9);
+				break;
+			}
+		}
 	}
 
 	@Override

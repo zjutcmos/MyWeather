@@ -36,11 +36,12 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/weather_bg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#27A5F9" >
-
+ <!-- android:background="#27A5F9" > -->
         <TextView
             android:id="@+id/publish_text"
             android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="当前温度："
-                        android:textColor="#FFF"
+                        android:textColor="#BA55D3"
                         android:textSize="18sp" />
 
                     <TextView
@@ -97,8 +98,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="风  向："
-                        android:textColor="#FFF"
+                        android:text="风        向："
+                        android:textColor="#BA55D3"
                         android:textSize="18sp" />
 
                     <TextView
@@ -115,8 +116,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="风力大小: "
-                        android:textColor="#FFF"
+                        android:text="风力大小  : "
+                        android:textColor="#BA55D3"
                         android:textSize="18sp" />
 
                     <TextView

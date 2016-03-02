@@ -1,5 +1,9 @@
 package activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import service.AutoUpdateService;
 import util.HttpCallbackListener;
 import util.HttpUtil;
@@ -35,6 +39,9 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	private TextView weatherDespText;// 用于天气情况的描述
 	private TextView tempHighText, tempLowText;// 最高最低温度
 	private TextView currentDateText;// 用于显示当前日期
+	private TextView current_temp;// 用于显示当前温度
+	private TextView fengxiang;// 用于显示当前风向
+	private TextView fengli;// 用于显示当前风力
 	private TextView weather_desp1,high_temp1,low_temp1,date1;//明天的天气
 	private TextView weather_desp2,high_temp2,low_temp2,date2;//后天的天气
 	private TextView weather_desp3,high_temp3,low_temp3,date3;//外后的天气
@@ -72,7 +79,10 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		weatherDespText = (TextView) findViewById(R.id.weather_desp);
 		tempHighText = (TextView) findViewById(R.id.high_temp);
 		tempLowText = (TextView) findViewById(R.id.low_temp);
+		fengxiang = (TextView) findViewById(R.id.fengxiang);
+		fengli = (TextView) findViewById(R.id.fengli);
 		currentDateText = (TextView) findViewById(R.id.current_date);
+		current_temp = (TextView) findViewById(R.id.current_temp);
 		weather_desp1 = (TextView) findViewById(R.id.weather_desp1);
 		high_temp1 = (TextView) findViewById(R.id.high_temp1);
 		low_temp1 = (TextView) findViewById(R.id.low_temp1);
@@ -182,14 +192,31 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		cityNameText.setText(sharedPreferences.getString("city_name", ""));
+		current_temp.setText(sharedPreferences.getString("current_temp", ""));
 		tempHighText.setText(sharedPreferences.getString("temp_high", ""));
 		tempLowText.setText(sharedPreferences.getString("temp_low", ""));
+		fengli.setText(sharedPreferences.getString("fengli", ""));
+		fengxiang.setText(sharedPreferences.getString("fengxiang", ""));
 		weatherDespText.setText(sharedPreferences.getString(
 				"weather_description", ""));
-		publishText.setText("今天 "
-				+ sharedPreferences.getString("publish_Time", "") + "发布");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.CHINA);
+		String publish_Time = sdf2.format(new Date());
+		publishText.setText("今天 " + publish_Time + "发布");
 		currentDateText
 				.setText(sharedPreferences.getString("current_data", ""));
+		//后3天的天气
+		weather_desp1.setText(sharedPreferences.getString("weather_desp1", ""));
+		high_temp1.setText(sharedPreferences.getString("high_temp1", ""));
+		low_temp1.setText(sharedPreferences.getString("low_temp1", ""));
+		date1.setText(sharedPreferences.getString("date1", ""));
+		weather_desp2.setText(sharedPreferences.getString("weather_desp2", ""));
+		high_temp2.setText(sharedPreferences.getString("high_temp2", ""));
+		low_temp2.setText(sharedPreferences.getString("low_temp2", ""));
+		date2.setText(sharedPreferences.getString("date2", ""));
+		weather_desp3.setText(sharedPreferences.getString("weather_desp3", ""));
+		high_temp3.setText(sharedPreferences.getString("high_temp3", ""));
+		low_temp3.setText(sharedPreferences.getString("low_temp3", ""));
+		date3.setText(sharedPreferences.getString("date3", ""));
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
 

@@ -80,12 +80,29 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="风向："
+                        android:text="当前温度："
                         android:textColor="#FFF"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/wind_desp"
+                        android:id="@+id/current_temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textColor="#FFF"
+                        android:textSize="18sp" />
+                </TableRow>
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="风  向："
+                        android:textColor="#FFF"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/fengxiang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="东北风"
@@ -103,7 +120,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/wind_info"
+                        android:id="@+id/fengli"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="风力4级"

@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import model.City;
 import model.Country;
 import model.Province;
+import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -97,20 +98,21 @@ public class Utility {
 			JSONObject jsonObject2 = jo.getJSONObject("data");
 			JSONArray weatherInfo = jsonObject2.getJSONArray("forecast");
 			String city_name = jsonObject2.getString("city");
-			// String publish_Time =
-						// weatherInfo.getJSONObject(0).getString("ptime");// 发布时间
-						String publish_Time = "9：00AM";
-			//for (int i = 0; i < 4; i++) {
-		
-			String temp_high = weatherInfo.getJSONObject(0).getString("high");// 最高温度
-			String temp_low = weatherInfo.getJSONObject(0).getString("low");// 最低温度
-			String weather_description = weatherInfo.getJSONObject(0)
-					.getString("type");// 天气描述
-			saveWeatherInfo(context, city_name, weather_description, temp_high,
-					temp_low, publish_Time);
-			
-				
-		//	}
+			String current_temp= jsonObject2.getString("wendu");//当前温度
+			for (int i = 0; i < 4; i++) {
+				String temp_high = weatherInfo.getJSONObject(i).getString(
+						"high");// 最高温度
+				String temp_low = weatherInfo.getJSONObject(i).getString("low");// 最低温度
+				String weather_description = weatherInfo.getJSONObject(i)
+						.getString("type");// 天气描述
+				String fengxiang = weatherInfo.getJSONObject(i).getString(
+						"fengxiang");// 风向
+				String fengli = weatherInfo.getJSONObject(i)
+						.getString("fengli");// 风力
+				String date = weatherInfo.getJSONObject(i).getString("date");// 日期
+				saveWeatherInfo(context, city_name, i, weather_description,
+						current_temp,fengxiang, fengli, temp_high, temp_low, date);
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -121,25 +123,58 @@ public class Utility {
 	 * 
 	 * @param context
 	 * @param city_name
+	 * @param i
 	 * @param weather_description
+	 * @param current_temp
+	 * @param fengxiang
+	 * @param fengli
 	 * @param temp_high
 	 * @param temp_low
-	 * @param publish_Time
+	 * @param date
 	 */
 	private static void saveWeatherInfo(Context context, String city_name,
-			String weather_description, String temp_high, String temp_low,
-			String publish_Time) {
+			int i, String weather_description,String current_temp, String fengxiang, String fengli,
+			String temp_high, String temp_low, String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+		
 		SharedPreferences.Editor editor = PreferenceManager
 				.getDefaultSharedPreferences(context).edit();
-		editor.putBoolean("city_selected", true);
-		editor.putString("city_name", city_name);
 
-		editor.putString("weather_description", weather_description);
-		editor.putString("temp_high", temp_high);
-		editor.putString("temp_low", temp_low);
-		editor.putString("publish_Time", publish_Time);
-		editor.putString("current_data", sdf.format(new Date()));
+		switch (i) {
+		case 0:
+			editor.putBoolean("city_selected", true);
+			editor.putString("city_name", city_name);
+			editor.putString("weather_description", weather_description);
+			editor.putString("current_temp", current_temp);
+			editor.putString("temp_high", temp_high);
+			editor.putString("temp_low", temp_low);
+			editor.putString("fengxiang", fengxiang);
+			editor.putString("fengli", fengli);
+			editor.putString("current_data", sdf.format(new Date()));
+			break;
+		case 1:
+			editor.putString("weather_desp1", weather_description);
+			editor.putString("high_temp1", temp_high);
+			editor.putString("low_temp1", temp_low);
+			editor.putString("date1", date);
+			break;
+		case 2:
+			editor.putString("weather_desp2", weather_description);
+			editor.putString("high_temp2", temp_high);
+			editor.putString("low_temp2", temp_low);
+			editor.putString("date2", date);
+			break;
+		case 3:
+			editor.putString("weather_desp3", weather_description);
+			editor.putString("high_temp3", temp_high);
+			editor.putString("low_temp3", temp_low);
+			editor.putString("date3", date);
+			break;
+
+		default:
+			break;
+		}
+
 		editor.commit();
 
 	}

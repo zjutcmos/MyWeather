@@ -22,6 +22,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 
+ 显示天气信息界面
+ *
+ */
 public class WeatherAcitity extends Activity implements OnClickListener {
 
 	private LinearLayout weatherInfoLayout;
@@ -30,6 +35,9 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	private TextView weatherDespText;// 用于天气情况的描述
 	private TextView tempHighText, tempLowText;// 最高最低温度
 	private TextView currentDateText;// 用于显示当前日期
+	private TextView weather_desp1,high_temp1,low_temp1,date1;//明天的天气
+	private TextView weather_desp2,high_temp2,low_temp2,date2;//后天的天气
+	private TextView weather_desp3,high_temp3,low_temp3,date3;//外后的天气
 	private Button switchCity;// 切换城市
 	private Button refreshWeather;// 刷新天气
 
@@ -38,17 +46,8 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather_layout);
-		weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
-		cityNameText = (TextView) findViewById(R.id.city_name);
-		publishText = (TextView) findViewById(R.id.publish_text);
-		weatherDespText = (TextView) findViewById(R.id.weather_desp);
-		tempHighText = (TextView) findViewById(R.id.temp1);
-		tempLowText = (TextView) findViewById(R.id.temp2);
-		currentDateText = (TextView) findViewById(R.id.current_date);
-		switchCity = (Button) findViewById(R.id.switch_city);
-		refreshWeather = (Button) findViewById(R.id.refresh_weather);
-		switchCity.setOnClickListener(this);
-		refreshWeather.setOnClickListener(this);
+		initView();//初始化控件
+		
 		// closeStrictMode();
 		String countryCode = getIntent().getStringExtra("country_code");// 手动选择城市时获得传过来的country_code
 		if (!TextUtils.isEmpty(countryCode)) {
@@ -64,6 +63,33 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		//激活 AutoUpdateService 服务，实现后台定时更新的功能
 		Intent intent = new Intent(this, AutoUpdateService.class);
 		startService(intent);
+	}
+
+	private void initView() {
+		weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
+		cityNameText = (TextView) findViewById(R.id.city_name);
+		publishText = (TextView) findViewById(R.id.publish_text);
+		weatherDespText = (TextView) findViewById(R.id.weather_desp);
+		tempHighText = (TextView) findViewById(R.id.high_temp);
+		tempLowText = (TextView) findViewById(R.id.low_temp);
+		currentDateText = (TextView) findViewById(R.id.current_date);
+		weather_desp1 = (TextView) findViewById(R.id.weather_desp1);
+		high_temp1 = (TextView) findViewById(R.id.high_temp1);
+		low_temp1 = (TextView) findViewById(R.id.low_temp1);
+		date1 = (TextView) findViewById(R.id.date1);
+		weather_desp2 = (TextView) findViewById(R.id.weather_desp2);
+		high_temp2 = (TextView) findViewById(R.id.high_temp2);
+		low_temp2 = (TextView) findViewById(R.id.low_temp2);
+		date2 = (TextView) findViewById(R.id.date2);
+		weather_desp3 = (TextView) findViewById(R.id.weather_desp3);
+		high_temp3 = (TextView) findViewById(R.id.high_temp3);
+		low_temp3 = (TextView) findViewById(R.id.low_temp3);
+		date3 = (TextView) findViewById(R.id.date3);
+		switchCity = (Button) findViewById(R.id.switch_city);
+		refreshWeather = (Button) findViewById(R.id.refresh_weather);
+		switchCity.setOnClickListener(this);
+		refreshWeather.setOnClickListener(this);
+		
 	}
 
 	/*

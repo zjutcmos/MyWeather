@@ -31,6 +31,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 选择城市界面
+ * 
+ */
 public class ChooseAreaActivity extends Activity {
 
 	public static final int LEVEL_PROVINCE = 0;
@@ -130,6 +134,7 @@ public class ChooseAreaActivity extends Activity {
 	private void queryProvinces() {
 		provinceList = myWeatherDB.loadProvince();
 		if (provinceList.size() > 0) {
+			//clear()后当前的变量和所有引用到这个list的变量都指向同一个空的list
 			dataList.clear();
 			for (Province province : provinceList) {
 				dataList.add(province.getProvinceName());
@@ -284,7 +289,7 @@ public class ChooseAreaActivity extends Activity {
 		} else if (currentLevel == LEVEL_CITY) {
 			queryProvinces();
 		} else {
-			if (isFromWeatherActivity) {
+			if (isFromWeatherActivity) {//如果是点击了天气界面的设置城市按钮，再返回
 				Intent intent = new Intent(this, WeatherAcitity.class);
 				startActivity(intent);
 			}

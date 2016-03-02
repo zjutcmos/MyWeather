@@ -18,10 +18,11 @@ public class AutoUpdateService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO 自动生成的方法存根
+		
 		return null;
 	}
 
+	// 每次服务启动的时候调用
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		new Thread(new Runnable() {
@@ -32,7 +33,7 @@ public class AutoUpdateService extends Service {
 			}
 		}).start();
 		AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		int anHour = 8 * 60 * 60 * 1000;// 这是8小时的毫秒数  为了少消耗流量和电量，8小时自动更新一次
+		int anHour =8 * 60 * 60 * 1000;// 这是8小时的毫秒数 为了少消耗流量和电量，8小时自动更新一次
 		long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
 		Intent intent2 = new Intent(this, AutoUpdateReceiver.class);
 		PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent2, 0);

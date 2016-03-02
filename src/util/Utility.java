@@ -97,18 +97,20 @@ public class Utility {
 			JSONObject jsonObject2 = jo.getJSONObject("data");
 			JSONArray weatherInfo = jsonObject2.getJSONArray("forecast");
 			String city_name = jsonObject2.getString("city");
-			// String weather_code =
-			// weatherInfo.getJSONObject(0).getString("cityid");====
-			// String weather_code ="101050304";
+			// String publish_Time =
+						// weatherInfo.getJSONObject(0).getString("ptime");// 发布时间
+						String publish_Time = "9：00AM";
+			//for (int i = 0; i < 4; i++) {
+		
 			String temp_high = weatherInfo.getJSONObject(0).getString("high");// 最高温度
 			String temp_low = weatherInfo.getJSONObject(0).getString("low");// 最低温度
 			String weather_description = weatherInfo.getJSONObject(0)
 					.getString("type");// 天气描述
-			// String publish_Time =
-			// weatherInfo.getJSONObject(0).getString("ptime");// 发布时间
-			String publish_Time = "9：00AM";
 			saveWeatherInfo(context, city_name, weather_description, temp_high,
 					temp_low, publish_Time);
+			
+				
+		//	}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

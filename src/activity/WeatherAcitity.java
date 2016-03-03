@@ -4,13 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.zjutcmos.myweather.R;
+
 import service.AutoUpdateService;
 import util.HttpCallbackListener;
 import util.HttpUtil;
+import util.LogUtil;
 import util.Utility;
-
-import com.example.myweather.R;
-
 import android.app.Activity;
 import android.app.SearchManager.OnCancelListener;
 import android.content.Intent;
@@ -130,7 +130,7 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	public void queryWeatherInfo(String weatherCode) {
 		String address = "http://wthrcdn.etouch.cn/weather_mini?citykey="
 				+ weatherCode;
-		Log.d("weatherCode--->", weatherCode);
+		LogUtil.d("weatherCode--->", weatherCode);
 
 		queryFromServer(address, "weatherCode");
 	}
@@ -159,7 +159,7 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 							sp.putString("weather_code", weatherCode);
 							sp.commit();
 							queryWeatherInfo(weatherCode);
-							Log.d("countryCode对应的response--->", response);
+							LogUtil.d("countryCode对应的response--->", response);
 						}
 					}
 				} else if ("weatherCode".equals(type)) {

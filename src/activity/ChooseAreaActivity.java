@@ -3,15 +3,15 @@ package activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zjutcmos.myweather.R;
+
 import util.HttpCallbackListener;
 import util.HttpUtil;
+import util.LogUtil;
 import util.Utility;
 import model.City;
 import model.Country;
 import model.Province;
-
-import com.example.myweather.R;
-
 import db.MyWeatherDB;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -174,7 +174,7 @@ public class ChooseAreaActivity extends Activity {
 		countryList = myWeatherDB.loadCountry(selectedCity.getId());
 		Log.d("countryList", countryList.size() + "=2===");
 		if (countryList.size() > 0) {
-			Log.d("activity", "-1-");
+			LogUtil.d("activity", "-1-");
 			dataList.clear();
 			for (Country country : countryList) {
 				dataList.add(country.getCountryName());

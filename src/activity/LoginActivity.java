@@ -35,15 +35,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		String name = et_name.getText().toString();
-		String psd = et_psd.getText().toString();
-		if (TextUtils.isEmpty(name) || TextUtils.isEmpty(psd)) {
-			Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
-			return;
-		}
+		
 		switch (v.getId()) {
 		case R.id.bt_register:
-			// 使用BmobSDK提供的注册功能
+			Intent i=new Intent(LoginActivity.this,RegisterActivity.class);
+			startActivity(i);
+			/*// 使用BmobSDK提供的注册功能
+			 * 
 			BmobUser user = new BmobUser();
 			user.setUsername(name);
 			user.setPassword(psd);
@@ -62,9 +60,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 							Toast.LENGTH_SHORT).show();
 
 				}
-			});
+			});*/
+			
 			break;
 		case R.id.bt_login:
+			String name = et_name.getText().toString();
+			String psd = et_psd.getText().toString();
+			if (TextUtils.isEmpty(name) || TextUtils.isEmpty(psd)) {
+				Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+				return;
+			}
 			BmobUser user2 = new BmobUser();
 			user2.setUsername(name);
 			user2.setPassword(psd);

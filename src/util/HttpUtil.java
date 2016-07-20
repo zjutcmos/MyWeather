@@ -30,7 +30,6 @@ public class HttpUtil {
 					while ((line = bReader.readLine()) != null) {
 						response.append(line);
 					}
-					//Log.d("http----->", "-1-");
 					if (httpCallbackListener != null) {
 						// 回调onFinish()方法
 						httpCallbackListener.onFinish(response.toString());
@@ -42,12 +41,10 @@ public class HttpUtil {
 						// 回调onError()方法
 						httpCallbackListener.onError(e);
 					}
-					//Log.d("http----->", "-2-");
 				} finally {
 					if (connection != null) {
 						connection.disconnect();
 					}
-					//Log.d("http----->", "-3-");
 				}
 			}
 		}).start();

@@ -99,7 +99,7 @@ public class ChooseAreaActivity extends Activity {
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, dataList);
 		listView.setAdapter(adapter);
-		myWeatherDB = MyWeatherDB.getInstance(this);// 通过单例模式确保只能获取一个MyWeatherDB
+		myWeatherDB = MyWeatherDB.getInstance(this);// 通过单例模式确保只能获取一个MyWeatherDB，并创建了数据库
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -237,6 +237,14 @@ public class ChooseAreaActivity extends Activity {
 							}
 						}
 					});
+					//当然也可以通过Handler来处理返回的数据
+					/*先把结果发出去，让主线程的handleMessage(Message msg)处理
+					 *Message msg=new Message();
+					 *msg.what=0x01;SHOW_RESPONSE
+					 *msg.obj=result;
+					 *handler.sendMessage(msg);
+					 * 
+					 */
 				}
 
 			}

@@ -4,7 +4,6 @@ import receiver.AutoUpdateReceiver;
 import util.HttpCallbackListener;
 import util.HttpUtil;
 import util.Utility;
-import activity.WeatherAcitity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -29,6 +28,7 @@ public class AutoUpdateService extends Service {
 
 			@Override
 			public void run() {
+				
 				updateWeather();
 			}
 		}).start();

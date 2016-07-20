@@ -14,7 +14,7 @@ public class LogUtil {
 	private static final int WARN = 4;
 	private static final int ERROR = 5;
 	private static final int NOTHING = 6;
-	private static final int LEVEL = VERBOSE;//修改这里的值就可以自由地控制日志的打印行为了
+	private static final int LEVEL = DEBUG;//修改这里的值就可以自由地控制日志的打印行为了
 	//当LEVEL = VERBOSE时，把所有的日志都打印出来，当LEVEL = NOTHING时就屏蔽了所有的日志
 
 	public static void v(String tag, String msg) {

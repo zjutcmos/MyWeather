@@ -131,7 +131,7 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 		String address = "http://wthrcdn.etouch.cn/weather_mini?citykey="
 				+ weatherCode;
 		LogUtil.d("weatherCode--->", weatherCode);
-
+        Log.d("weatherCode--->", weatherCode);
 		queryFromServer(address, "weatherCode");
 	}
 
@@ -235,24 +235,30 @@ public class WeatherAcitity extends Activity implements OnClickListener {
 	 */
 	private void changeBackground(String weather_description) {
 		if (!TextUtils.isEmpty(weather_description)) {
-             switch (weather_description) {
+			Log.e("天气信息---->", weather_description);
+			switch (weather_description) {
 			case "晴":
-				layout_bg.setBackground(getResources().getDrawable(R.drawable.qing));
+				layout_bg.setBackground(getResources().getDrawable(
+						R.drawable.qing));
 				break;
 			case "阴":
-				layout_bg.setBackground(getResources().getDrawable(R.drawable.yin));
+				layout_bg.setBackground(getResources().getDrawable(
+						R.drawable.yin));
 				break;
 			case "小雨":
-				layout_bg.setBackground(getResources().getDrawable(R.drawable.yu));
+				layout_bg.setBackground(getResources().getDrawable(
+						R.drawable.yu));
 				break;
 			case "小雪":
-				layout_bg.setBackground(getResources().getDrawable(R.drawable.xue));
+				layout_bg.setBackground(getResources().getDrawable(
+						R.drawable.xue));
 				break;
 			case "多云":
-				layout_bg.setBackground(getResources().getDrawable(R.drawable.duoyun));
+				layout_bg.setBackground(getResources().getDrawable(
+						R.drawable.duoyun));
 				break;
 			default:
-				layout_bg.setBackgroundColor(0x27A5F9);
+				layout_bg.setBackgroundColor(0xff27A5F9);
 				break;
 			}
 		}
